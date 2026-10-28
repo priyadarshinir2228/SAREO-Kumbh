@@ -104,53 +104,67 @@ Product IDs are listed in [`09_docs/download_manifest.csv`](09_docs/download_man
 
 ## 🔄 Workflow
 
+<p align="center">
+  <img src="09_docs/workflow.svg" width="100%" alt="SAREO-Kumbh processing workflow: data acquisition, SAR and EO processing, co-registration, lossless fusion, analysis and deliverables"/>
+</p>
+
+<sub>Numbers in the boxes refer to items of the assessment brief.</sub>
+
+<details>
+<summary><b>Interactive version (Mermaid, zoom and pan on github.com)</b></summary>
+
 ```mermaid
-flowchart LR
-    subgraph ACQ["1 · Acquisition"]
-        A1[Sentinel-1 GRD<br/>5 dates]
-        A2[Sentinel-2 L2A<br/>3 dates]
-        A3[OSM + DEM]
+flowchart TD
+    subgraph S1["1. Data acquisition"]
+        A1["Sentinel-1 GRD - 5 dates"]
+        A2["Sentinel-2 L2A - 3 dates"]
+        A3["OSM + Copernicus DEM"]
     end
-    subgraph SAR["2 · SAR processing (SNAP)"]
-        B1[Orbit → Thermal noise →<br/>Calibration σ⁰]
-        B2[Speckle filter<br/>25 variants → Lee 7×7]
-        B3[Terrain correction<br/>10 m UTM 44N]
+    subgraph S2["2. SAR processing in SNAP"]
+        B1["Orbit, thermal noise, calibration to sigma0"]
+        B2["Speckle filter: 25 variants, Lee 7x7 chosen"]
+        B3["Terrain correction, 10 m, UTM 44N"]
     end
-    subgraph EO["3 · EO processing"]
-        C1[SCL cloud mask<br/>reflectance scaling]
-        C2[Composites + indices<br/>NDVI · MNDWI · NDBI]
+    subgraph S3["3. EO processing"]
+        C1["SCL cloud mask + reflectance scaling"]
+        C2["Composites + NDVI, MNDWI, NDBI"]
     end
-    subgraph GEO["6 · Geometry"]
-        D1[GCP georeferencing<br/>RMSE]
-        D2[Co-registration<br/>dates + sensors]
+    subgraph S4["6. Georeferencing and co-registration"]
+        D1["GCP georeferencing with RMSE"]
+        D2["Co-registration across dates and sensors"]
     end
-    subgraph FUS["11 · Fusion"]
-        E1[Lossless stack]
-        E2[PCA · IHS · Brovey · HPF]
+    subgraph S5["11. Lossless fusion"]
+        E1["11-band SAR + EO stack"]
+        E2["PCA, IHS, Brovey, HPF + quality metrics"]
     end
-    subgraph ANA["12–13 · Analysis"]
-        F1[Signature sheet<br/>JM separability]
-        F2[Log-ratio change<br/>+3 dB / Otsu]
-        F3[Random Forest<br/>5 classes]
+    subgraph S6["12-13. Analysis"]
+        F1["Signature sheet + JM separability"]
+        F2["Log-ratio change: +3 dB and Otsu"]
+        F3["Random Forest, 5 classes"]
     end
-    subgraph OUT["4 · 15 · Deliverables"]
-        G1[Feature GeoPackage]
-        G2[7 map layouts]
-        G3[QGIS project]
+    subgraph S7["4 and 15. Deliverables"]
+        G1["Feature GeoPackage + exports"]
+        G2["7 map layouts"]
+        G3["QGIS project, relative paths"]
     end
-    A1 --> B1 --> B2 --> B3 --> D2
-    A2 --> C1 --> C2 --> D2
-    A3 --> D1 --> D2
-    D2 --> E1 --> F1
+    A1 --> B1 --> B2 --> B3
+    A2 --> C1 --> C2
+    A3 --> D1
+    B3 --> D2
+    C2 --> D2
+    D1 --> D2
+    D2 --> E1
     E1 --> E2
+    E1 --> F1
     E1 --> F3
     B3 --> F2
     F1 --> F3
     F2 --> G1
-    F3 --> G1 --> G2 --> G3
+    F3 --> G1
+    G1 --> G2 --> G3
 ```
 
-<sub>Numbers in the boxes refer to items of the assessment brief.</sub>
+</details>
 
 ---
 

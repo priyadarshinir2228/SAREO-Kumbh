@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 820" width="960" height="820" font-family="Segoe UI, Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606a"/>
+    </marker>
+    <style>
+      .t  { font-size: 15px; font-weight: 700; fill: #ffffff; }
+      .l  { font-size: 13.5px; fill: #24292f; }
+      .h  { font-size: 12px; font-weight: 700; fill: #57606a; letter-spacing: 1.5px; }
+      .a  { stroke: #57606a; stroke-width: 1.6; fill: none; marker-end: url(#ar); }
+      .in { font-size: 14px; font-weight: 600; fill: #24292f; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="820" rx="16" fill="#f6f8fa"/>
+
+  <!-- Row A: inputs -->
+  <text class="h" x="30" y="34">1 · DATA ACQUISITION</text>
+  <rect x="40"  y="48" width="260" height="52" rx="10" fill="#ffffff" stroke="#1f6feb" stroke-width="2"/>
+  <text class="in" x="170" y="70" text-anchor="middle">Sentinel-1 IW GRD</text>
+  <text class="l"  x="170" y="89" text-anchor="middle">5 dates · VV + VH · orbit 92 desc.</text>
+  <rect x="350" y="48" width="260" height="52" rx="10" fill="#ffffff" stroke="#2ea043" stroke-width="2"/>
+  <text class="in" x="480" y="70" text-anchor="middle">Sentinel-2 L2A</text>
+  <text class="l"  x="480" y="89" text-anchor="middle">3 dates · tile 44RNP</text>
+  <rect x="660" y="48" width="260" height="52" rx="10" fill="#ffffff" stroke="#8250df" stroke-width="2"/>
+  <text class="in" x="790" y="70" text-anchor="middle">OSM + Copernicus DEM</text>
+  <text class="l"  x="790" y="89" text-anchor="middle">bridges, roads, water · GLO-30</text>
+
+  <path class="a" d="M170,100 V146"/>
+  <path class="a" d="M480,100 V146"/>
+  <path class="a" d="M790,100 V146"/>
+
+  <!-- Row B: processing -->
+  <rect x="30" y="150" width="280" height="180" rx="10" fill="#ffffff" stroke="#1f6feb" stroke-width="2"/>
+  <path d="M30,160 a10,10 0 0 1 10,-10 h260 a10,10 0 0 1 10,10 v26 h-280 z" fill="#1f6feb"/>
+  <text class="t" x="44" y="174">2 · SAR processing (SNAP)</text>
+  <text class="l" x="46" y="210">• Orbit file + thermal noise removal</text>
+  <text class="l" x="46" y="234">• Radiometric calibration → σ⁰</text>
+  <text class="l" x="46" y="258">• Speckle filter: 25 tested → Lee 7×7</text>
+  <text class="l" x="46" y="282">• Terrain correction, 10 m grid</text>
+  <text class="l" x="46" y="306">• Subset to AOI, convert to dB</text>
+
+  <rect x="340" y="150" width="280" height="180" rx="10" fill="#ffffff" stroke="#2ea043" stroke-width="2"/>
+  <path d="M340,160 a10,10 0 0 1 10,-10 h260 a10,10 0 0 1 10,10 v26 h-280 z" fill="#2ea043"/>
+  <text class="t" x="354" y="174">3 · EO processing</text>
+  <text class="l" x="356" y="210">• SCL cloud / shadow mask</text>
+  <text class="l" x="356" y="234">• Reflectance = (DN − 1000) / 10000</text>
+  <text class="l" x="356" y="258">• 20 m → 10 m, clip, band stack</text>
+  <text class="l" x="356" y="282">• Natural, false-colour, SWIR composites</text>
+  <text class="l" x="356" y="306">• NDVI · MNDWI · NDBI</text>
+
+  <rect x="650" y="150" width="280" height="180" rx="10" fill="#ffffff" stroke="#8250df" stroke-width="2"/>
+  <path d="M650,160 a10,10 0 0 1 10,-10 h260 a10,10 0 0 1 10,10 v26 h-280 z" fill="#8250df"/>
+  <text class="t" x="664" y="174">6 · Georef + co-registration</text>
+  <text class="l" x="666" y="210">• GCP polynomial / TPS + check RMSE</text>
+  <text class="l" x="666" y="234">• S1 ↔ S1: phase correlation</text>
+  <text class="l" x="666" y="258">• S2 ↔ S2: AROSICS tie points</text>
+  <text class="l" x="666" y="282">• S1 ↔ S2: same-day water masks</text>
+  <text class="l" x="666" y="306">• Absolute check vs OSM bridges</text>
+
+  <path class="a" d="M170,330 V356 H480 V376"/>
+  <path class="a" d="M480,330 V376"/>
+  <path class="a" d="M790,330 V356 H480"/>
+
+  <!-- Row C: fusion -->
+  <rect x="30" y="380" width="900" height="80" rx="10" fill="#ffffff" stroke="#bf8700" stroke-width="2"/>
+  <path d="M30,390 a10,10 0 0 1 10,-10 h880 a10,10 0 0 1 10,10 v26 h-900 z" fill="#bf8700"/>
+  <text class="t" x="44" y="404">11 · Lossless SAR + EO fusion — common 10 m grid, EPSG:32644</text>
+  <text class="l" x="46" y="444">11-band stack per epoch, bit-identical round trip  ·  PCA · IHS · Brovey · HPF scored with CC, ERGAS, SAM, sCC</text>
+
+  <path class="a" d="M135,460 V506"/>
+  <path class="a" d="M365,460 V506"/>
+  <path class="a" d="M595,460 V506"/>
+  <path class="a" d="M825,460 V506"/>
+
+  <!-- Row D: analysis -->
+  <rect x="30" y="510" width="210" height="140" rx="10" fill="#ffffff" stroke="#cf222e" stroke-width="2"/>
+  <path d="M30,520 a10,10 0 0 1 10,-10 h190 a10,10 0 0 1 10,10 v26 h-210 z" fill="#cf222e"/>
+  <text class="t" x="44" y="534">12 · Signatures</text>
+  <text class="l" x="44" y="570">VV, VH, ratio, NDVI,</text>
+  <text class="l" x="44" y="592">MNDWI, NDBI per class</text>
+  <text class="l" x="44" y="614">and epoch · JM</text>
+  <text class="l" x="44" y="636">separability</text>
+
+  <rect x="260" y="510" width="210" height="140" rx="10" fill="#ffffff" stroke="#cf222e" stroke-width="2"/>
+  <path d="M260,520 a10,10 0 0 1 10,-10 h190 a10,10 0 0 1 10,10 v26 h-210 z" fill="#cf222e"/>
+  <text class="t" x="274" y="534">13 · Change detection</text>
+  <text class="l" x="274" y="570">Log-ratio T1/T0, T2/T1</text>
+  <text class="l" x="274" y="592">+3 dB fixed and Otsu</text>
+  <text class="l" x="274" y="614">Tent area per epoch</text>
+  <text class="l" x="274" y="636">0 → 10.95 → 0.26 km²</text>
+
+  <rect x="490" y="510" width="210" height="140" rx="10" fill="#ffffff" stroke="#cf222e" stroke-width="2"/>
+  <path d="M490,520 a10,10 0 0 1 10,-10 h190 a10,10 0 0 1 10,10 v26 h-210 z" fill="#cf222e"/>
+  <text class="t" x="504" y="534">13 · Random Forest</text>
+  <text class="l" x="504" y="570">5 classes, 6 input sets</text>
+  <text class="l" x="504" y="592">SAR 0.59 · EO 0.78</text>
+  <text class="l" x="504" y="614">Fused + temporal 0.87</text>
+  <text class="l" x="504" y="636">(κ 0.82)</text>
+
+  <rect x="720" y="510" width="210" height="140" rx="10" fill="#ffffff" stroke="#0a7ea4" stroke-width="2"/>
+  <path d="M720,520 a10,10 0 0 1 10,-10 h190 a10,10 0 0 1 10,10 v26 h-210 z" fill="#0a7ea4"/>
+  <text class="t" x="734" y="534">14 · Classical vs AI</text>
+  <text class="l" x="734" y="570">Lee vs SAR2SAR</text>
+  <text class="l" x="734" y="592">SCL vs OmniCloudMask</text>
+  <text class="l" x="734" y="614">Rules vs Segment</text>
+  <text class="l" x="734" y="636">Anything (IoU 0.63)</text>
+
+  <path class="a" d="M135,650 V676 H480 V696"/>
+  <path class="a" d="M365,650 V696"/>
+  <path class="a" d="M595,650 V696"/>
+  <path class="a" d="M825,650 V676 H480"/>
+
+  <!-- Row E: deliverables -->
+  <rect x="30" y="700" width="900" height="90" rx="10" fill="#ffffff" stroke="#57606a" stroke-width="2"/>
+  <path d="M30,710 a10,10 0 0 1 10,-10 h880 a10,10 0 0 1 10,10 v26 h-900 z" fill="#57606a"/>
+  <text class="t" x="44" y="724">4 · 9 · 15 · Deliverables</text>
+  <text class="l" x="46" y="760">Validated feature GeoPackage + SHP / GeoJSON / KML / CSV  ·  shapefile merge demo  ·  7 map layouts (PDF + PNG)</text>
+  <text class="l" x="46" y="780">QGIS project with relative paths — reopen test passed (47 / 47 layers valid)  ·  processing log for every step</text>
+</svg>
