@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "AOI_Kumbh_4326",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "name": "AOI_Kumbh", "description": "Maha Kumbh 2025 Mela area, Triveni Sangam, Prayagraj (both banks + city strip)", "epsg": 32644, "width_km": 14.2, "height_km": 13.8, "area_km2": 195.96, "created": "2026-10-22", "source": "Extent 81.82-81.96 E, 25.38-25.503 N; landmarks checked in OSM; north edge checked on S2 2025-02-11; snapped to 100 m UTM grid" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 81.960224950001987, 25.37844095839521 ], [ 81.961213517590252, 25.503045004109136 ], [ 81.819929586028223, 25.503903162910717 ], [ 81.819086279978038, 25.379294338937154 ], [ 81.960224950001987, 25.37844095839521 ] ] ] } }
+]
+}

@@ -1,0 +1,65 @@
+input_set,feature,importance
+EO-only,B12,0.1938
+EO-only,NDVI,0.1669
+EO-only,B11,0.1583
+EO-only,B08,0.1239
+EO-only,B02,0.0984
+EO-only,B04,0.0957
+EO-only,MNDWI,0.0943
+EO-only,B03,0.0686
+Fused,NDVI,0.1655
+Fused,B12,0.1517
+Fused,VV,0.1477
+Fused,B11,0.13
+Fused,VH,0.0947
+Fused,B08,0.0815
+Fused,B04,0.0617
+Fused,MNDWI,0.0555
+Fused,B02,0.0554
+Fused,B03,0.0367
+Fused,VVminusVH,0.0196
+Fused + temporal,NDVI,0.1329
+Fused + temporal,VV_T2,0.1093
+Fused + temporal,B12,0.0984
+Fused + temporal,VV,0.0908
+Fused + temporal,B11,0.0709
+Fused + temporal,VH_T2,0.0704
+Fused + temporal,VV_T0,0.0667
+Fused + temporal,VH,0.0612
+Fused + temporal,dVV_T1-T0,0.0519
+Fused + temporal,B02,0.0384
+Fused + temporal,MNDWI,0.0377
+Fused + temporal,B04,0.0369
+Fused + temporal,B08,0.0356
+Fused + temporal,dVV_T2-T1,0.0344
+Fused + temporal,VH_T0,0.0284
+Fused + temporal,B03,0.0278
+Fused + temporal,VVminusVH,0.0084
+Fused + temporal + change rule,NDVI,0.1329
+Fused + temporal + change rule,VV_T2,0.1093
+Fused + temporal + change rule,B12,0.0984
+Fused + temporal + change rule,VV,0.0908
+Fused + temporal + change rule,B11,0.0709
+Fused + temporal + change rule,VH_T2,0.0704
+Fused + temporal + change rule,VV_T0,0.0667
+Fused + temporal + change rule,VH,0.0612
+Fused + temporal + change rule,dVV_T1-T0,0.0519
+Fused + temporal + change rule,B02,0.0384
+Fused + temporal + change rule,MNDWI,0.0377
+Fused + temporal + change rule,B04,0.0369
+Fused + temporal + change rule,B08,0.0356
+Fused + temporal + change rule,dVV_T2-T1,0.0344
+Fused + temporal + change rule,VH_T0,0.0284
+Fused + temporal + change rule,B03,0.0278
+Fused + temporal + change rule,VVminusVH,0.0084
+SAR multi-temporal,VV_T2,0.1805
+SAR multi-temporal,VV,0.1676
+SAR multi-temporal,VV_T0,0.1319
+SAR multi-temporal,dVV_T1-T0,0.1163
+SAR multi-temporal,VH,0.1119
+SAR multi-temporal,VH_T2,0.1095
+SAR multi-temporal,dVV_T2-T1,0.094
+SAR multi-temporal,VH_T0,0.0883
+SAR-only,VV,0.4017
+SAR-only,VH,0.3641
+SAR-only,VVminusVH,0.2342

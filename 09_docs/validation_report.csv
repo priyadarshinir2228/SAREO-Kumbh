@@ -1,0 +1,15 @@
+layer,features,crs,invalid_geometries,duplicate_geometries,null_required_fields,null_detail,ids_unique,action,check,result
+tent_blocks,51.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+pontoon_bridges,5.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+river_T0,17.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+river_T1,19.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+river_T2,71.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+sand_bars,66.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+veg_fields,277.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+temp_roads,165.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+permanent_buildings,65499.0,EPSG:32644,0.0,0.0,0.0,,True,none needed,,
+tent_blocks,,,,,,,,,tent blocks must not overlap each other,0.0 m2 overlap in 0 pairs
+tent_blocks,,,,,,,,,tent blocks must not lie on T1 water,7130 m2 (0.06 % of tent area)
+pontoon_bridges,,,,,,,,,bridges must cross T1 water,"water fraction per bridge 0.89, 0.61, 0.50, 0.69, 0.96"
+permanent_buildings,,,,,,,,,no permanent building inside a tent block,0 buildings within tent blocks
+temp_roads,,,,,,,,,road dangles (line ends touching no other line),355 of 390 end points - expected: roads are clipped at tent-block edges

@@ -1,0 +1,30 @@
+# Raw Sentinel downloads (11.8 GB) - re-download with 10_scripts/download_cdse.py
+01_raw/
+
+# Rasters (~1.2 GB) - too large for GitHub; shipped in the submission zip
+*.tif
+*.tiff
+*.img
+*.hdr
+*.dim
+*.data/
+*.aux.xml
+*.ovr
+03_enhanced/S1_filters/work/
+
+# Backups and QGIS lock/temp files
+*.bak
+*.qgz.bak
+*~
+SAREO_Kumbh_before_phase15.qgz
+.~lock*
+
+# Python / OS clutter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+Thumbs.db
+desktop.ini
+
+# Personal notes
+09_docs/15_Interview_Prep.md

@@ -1,0 +1,48 @@
+<graph id="S1_filter_tc">
+  <!-- Phase 6: speckle filter in radar geometry, then the same terrain correction as Phase 5.
+       Variables: ${input} (.dim from S1_cal_subset.xml), ${filter}, ${size} (kernel), ${lsWindow}, ${output}. -->
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters><file>${input}</file></parameters>
+  </node>
+  <node id="Speckle-Filter">
+    <operator>Speckle-Filter</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters>
+      <filter>${filter}</filter>
+      <filterSizeX>${size}</filterSizeX>
+      <filterSizeY>${size}</filterSizeY>
+      <dampingFactor>2</dampingFactor>
+      <!-- Sentinel-1 IW GRDH has ENL ~4.4 (ESA product spec); ENL = 1 makes Lee / Gamma-MAP collapse to a boxcar -->
+      <estimateENL>false</estimateENL>
+      <enl>${enl}</enl>
+      <numLooksStr>${looks}</numLooksStr>
+      <windowSize>${lsWindow}</windowSize>
+      <targetWindowSizeStr>3x3</targetWindowSizeStr>
+      <sigmaStr>0.9</sigmaStr>
+      <anSize>50</anSize>
+    </parameters>
+  </node>
+  <node id="Terrain-Correction">
+    <operator>Terrain-Correction</operator>
+    <sources><sourceProduct refid="Speckle-Filter"/></sources>
+    <parameters>
+      <demName>Copernicus 30m Global DEM</demName>
+      <demResamplingMethod>BILINEAR_INTERPOLATION</demResamplingMethod>
+      <imgResamplingMethod>BILINEAR_INTERPOLATION</imgResamplingMethod>
+      <pixelSpacingInMeter>10.0</pixelSpacingInMeter>
+      <mapProjection>EPSG:32644</mapProjection>
+      <nodataValueAtSea>false</nodataValueAtSea>
+      <saveSelectedSourceBand>true</saveSelectedSourceBand>
+      <alignToStandardGrid>true</alignToStandardGrid>
+      <standardGridOriginX>5.0</standardGridOriginX>
+      <standardGridOriginY>5.0</standardGridOriginY>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="Terrain-Correction"/></sources>
+    <parameters><file>${output}</file><formatName>GeoTIFF-BigTIFF</formatName></parameters>
+  </node>
+</graph>

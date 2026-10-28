@@ -1,0 +1,10 @@
+layer,features,shp_features,shp_fields_match,csv_rows,crs_gpkg_shp,crs_geojson
+tent_blocks,51,51,True,51,EPSG:32644,EPSG:4326
+pontoon_bridges,5,5,True,5,EPSG:32644,EPSG:4326
+river_T0,17,17,True,17,EPSG:32644,EPSG:4326
+river_T1,19,19,True,19,EPSG:32644,EPSG:4326
+river_T2,71,71,True,71,EPSG:32644,EPSG:4326
+sand_bars,66,66,True,66,EPSG:32644,EPSG:4326
+veg_fields,277,277,True,277,EPSG:32644,EPSG:4326
+temp_roads,165,165,True,165,EPSG:32644,EPSG:4326
+permanent_buildings,65499,65499,True,65499,EPSG:32644,EPSG:4326

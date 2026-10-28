@@ -1,0 +1,19 @@
+check,image,reference,shift_E_m,shift_N_m,shift_px,note
+A absolute vs OSM bridges,S1 VV T0 20241112,OSM bridges,10.0,30.0,3.16,gain at peak 2.03 dB
+A absolute vs OSM bridges,S1 VV T1a 20250123,OSM bridges,10.0,10.0,1.41,gain at peak 1.15 dB
+A absolute vs OSM bridges,S1 VV T1b 20250204,OSM bridges,10.0,10.0,1.41,gain at peak 1.10 dB
+A absolute vs OSM bridges,S1 VV T1 20250216,OSM bridges,10.0,10.0,1.41,gain at peak 0.70 dB
+A absolute vs OSM bridges,S1 VV T2 20250417,OSM bridges,10.0,10.0,1.41,gain at peak 1.04 dB
+A absolute vs OSM bridges,S2 B08 T0 20241113,OSM bridges,10.0,-20.0,2.24,gain at peak 0.0094 refl
+A absolute vs OSM bridges,S2 B08 T1 20250216,OSM bridges,10.0,-20.0,2.24,gain at peak 0.0074 refl
+A absolute vs OSM bridges,S2 B08 T2 20250417,OSM bridges,10.0,-20.0,2.24,gain at peak 0.0107 refl
+B S1 date-to-date (whole AOI),S1 VV T0 20241112,S1 VV T1 20250216,-0.0,-0.5,0.05,phase-corr error 1.000
+B S1 date-to-date (static city strip),S1 VV T0 20241112,S1 VV T1 20250216,-0.0,-0.5,0.05,phase-corr error 1.000
+B S1 date-to-date (whole AOI),S1 VV T1a 20250123,S1 VV T1 20250216,0.5,0.0,0.05,phase-corr error 1.000
+B S1 date-to-date (static city strip),S1 VV T1a 20250123,S1 VV T1 20250216,0.5,0.0,0.05,phase-corr error 1.000
+B S1 date-to-date (whole AOI),S1 VV T1b 20250204,S1 VV T1 20250216,-0.0,-0.5,0.05,phase-corr error 1.000
+B S1 date-to-date (static city strip),S1 VV T1b 20250204,S1 VV T1 20250216,-0.0,-0.5,0.05,phase-corr error 1.000
+B S1 date-to-date (whole AOI),S1 VV T2 20250417,S1 VV T1 20250216,-0.0,-0.5,0.05,phase-corr error 1.000
+B S1 date-to-date (static city strip),S1 VV T2 20250417,S1 VV T1 20250216,-0.0,-0.5,0.05,phase-corr error 1.000
+C S1 to S2 (same-day water masks),S1 water T1 20250216,S2 water T1 20250216,1.0,-2.0,0.22,IoU at zero shift 0.618; water S1 5.5% S2 4.7%
+C S1 to S2 (same-day water masks),S1 water T2 20250417,S2 water T2 20250417,-20.0,-2.0,2.01,IoU at zero shift 0.177; water S1 6.6% S2 1.4%

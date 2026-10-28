@@ -1,0 +1,6 @@
+class,km2
+appeared (T1-T0 >= +3),15.45
+vanished (T2-T1 <= -2),34.75
+temporary (both),12.22
+otsu_build_dB,1.97
+otsu_clear_dB,-3.53

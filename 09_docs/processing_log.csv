@@ -1,0 +1,102 @@
+step_id,date,phase,tool,operation,parameters,input,output,checked_by_result,notes
+P0-01,2026-10-22,0,Windows,Create project folder structure,see README.md,,D:\SAREO-Kumbh,ok,
+P0-02,2026-10-22,0,Text editor,Write project charter,,brief PDF,09_docs/00_Project_Charter.md,draft,deadline TBD
+P1-01,2026-10-22,1,Web search + source pages,Literature survey by topic,classical->DL->SOTA->limitation->our approach,web sources,09_docs/02_Literature_Survey.md,draft,o-marked citations still to verify
+P1-02,2026-10-22,1,Text editor,Literature matrix,9 topics,02_Literature_Survey.md,09_docs/literature_matrix.csv,draft,
+P1-03,2026-10-22,1,Text editor,Gap statement into charter,,02_Literature_Survey.md,09_docs/00_Project_Charter.md,ok,
+P2-01,2026-10-22,2,PowerShell,Software and hardware inventory,registry + PATH + CIM,PC,09_docs/03_Software_Setup.md,ok,no QGIS/SNAP/OTB found; 15.5 GB RAM; Intel Arc iGPU; C: 46.6 GB free
+P2-02,2026-10-22,2,conda,Create sareo env,python=3.11 conda-forge gdal rasterio geopandas numpy scipy matplotlib scikit-image scikit-learn arosics jupyterlab tqdm,,D:\conda_envs\sareo,ok,
+P2-03,2026-10-22,2,pip,Install AI packages,torch+torchvision (CPU index) omnicloudmask 1.8.0 deepdespeckling 0.8,,D:\conda_envs\sareo,ok,check_env.py all present
+P2-04,2026-10-22,2,winget,Install QGIS LTR,OSGeo.QGIS_LTR --silent,,C:\Program Files\QGIS 3.44.14,ok,GDAL 3.13.3 bundled
+P2-05,2026-10-22,2,SNAP installer,Install SNAP 14.0.0 Sentinel Toolboxes,-q -dir D:\esa-snap; Xmx10G; snap.userdir=D:/snap_userdir,esa-snap_sentinel_windows-14.0.0.exe,D:\esa-snap,ok,gpt S1 operators present
+P2-06,2026-10-22,2,tar,Extract OTB 9.1.1,,OTB-win64.zip,D:\OTB,ok,Despeckle CLI runs
+P2-07,2026-10-22,2,QGIS GUI (user),Install plugins and create project,EPSG:32644; relative paths,,SAREO_Kumbh.qgz,ok,11 plugins present
+P2-08,2026-10-22,2,QGIS Python QSettings,Configure OTB provider and enable GRASS,OTB_FOLDER=D:/OTB; OTB_APP_FOLDER=D:/OTB/lib/otb/applications,,QGIS3.ini,ok,plugin has no Activate box
+P2-09,2026-10-22,2,qgis_process,Verify providers + OTB Despeckle test,lee rad=2 nblooks=1,synthetic speckle raster,scratch,ok,GRASS 307 OTB 109; ENL 1.00->11.64
+P3-01,2026-10-22,3,Python (Overpass API),Check Sangam landmarks in OSM,10_scripts/osm_landmarks.py,OpenStreetMap,console,ok,Sangam 25.423N 81.889E; Shastri/Naini/Jamuna bridges; Jhusi; Arail inside AOI
+P3-02,2026-10-22,3,Python (geopandas),Create AOI rectangle,10_scripts/make_aoi.py; 81.82-81.96E 25.38-25.49N -> UTM 44N snapped to 100 m,,06_vectors/AOI_Kumbh.gpkg (layer aoi),ok,582400 2807200 596600 2819600; 14.2 x 12.4 km; 176.08 km2
+P3-03,2026-10-22,3,Python (geopandas),Export WGS 84 copies,EPSG:4326,AOI_Kumbh.gpkg,06_vectors/AOI_Kumbh_4326.geojson + .wkt,ok,for Copernicus Browser and SNAP Subset
+P3-04,2026-10-22,3,PyQGIS,Add AOI to project + layer groups,10_scripts/add_aoi_to_project.py; red outline 0.8 mm,AOI_Kumbh.gpkg,SAREO_Kumbh.qgz (backup .qgz.bak),ok,relative path ./06_vectors/AOI_Kumbh.gpkg
+P4-01,2026-10-22,4,Python (CDSE OData),Catalogue search per epoch,10_scripts/search_scenes.py; S1 GRD/SLC + S2 L2A cloud<=20%,AOI WKT,09_docs/scene_candidates.csv,ok,84 products; S1A orbits 56 asc + 92 desc
+P4-02,2026-10-22,4,Python (Earth Search COG),AOI previews of cloud-free S2 dates,10_scripts/preview_s2.py; 20 m true colour,AWS COGs,09_docs/s2_previews_T0/T1/T2.png,ok,T0 flooded 19 Oct; dry mid-Nov; grid Jan-Feb; cleared mid-Apr
+P4-03,2026-10-22,4,Python,AOI extent check on T1,window +10 km N,S2 2025-02-11,09_docs/s2_extent_check_T1.png,ok,north edge raised to 2821000 m
+P4-04,2026-10-22,4,Python (geopandas),Rebuild AOI,10_scripts/make_aoi.py NORTH=25.503,,06_vectors/AOI_Kumbh.gpkg/.geojson/.wkt,ok,582400 2807200 596600 2821000; 195.96 km2
+P4-05,2026-10-22,4,Text editor,Scene selection + manifest,orbit 92 desc; same-day S1/S2 pairs,scene_candidates.csv,09_docs/download_manifest.csv + 04_Data_Selection.md,ok,core 12.4 GB; all 46 GB
+P4-06,2026-10-22,4,Python,Write CDSE download script,10_scripts/download_cdse.py (user login at runtime),download_manifest.csv,01_raw/S1 + 01_raw/S2,ready,run by user
+P4-07,2026-10-22,4,Python (Overpass API),OSM reference layers clipped to AOI,10_scripts/fetch_osm.py; EPSG:32644,OpenStreetMap,06_vectors/osm.gpkg,ok,roads 11428; bridges 240; rivers 48; water_areas 57; buildings 66311
+P4-08,2026-10-22,4,download_cdse.py (user),First download run,core,download_manifest.csv,01_raw/S1 (.part),failed,connection dropped at 1443/1720 MB of S1 T0
+P4-09,2026-10-22,4,Python,Add resume + retry + zip check to downloader,HTTP Range; 10 attempts; manifest.safe check,,10_scripts/download_cdse.py,ok,re-run to resume
+P4-10,2026-10-23,4,download_cdse.py (user),Core downloads resumed and completed,core,download_manifest.csv,01_raw/S1 (5) + 01_raw/S2 (3),ok,12.4 GB; 8 rows in download_log.csv
+P4-11,2026-10-23,4,Python,Verify downloads,10_scripts/verify_downloads.py; size + zip CRC + manifest.safe,01_raw,console,ok,8/8 verified
+P5-01,2026-10-22,5,SNAP graph,Write no-filter preprocessing graph,orbit precise -> thermal noise -> border noise (500/0.5) -> sigma0 linear -> subset AOI -> TC (Copernicus 30m DEM; 10 m; EPSG:32644; bilinear) -> GeoTIFF linear + dB,,09_docs/snap_graphs/S1_preproc_nofilter.xml,ready,params checked against gpt 14 help
+P5-02,2026-10-22,5,PowerShell,Batch runner for graph,10_scripts/run_s1_preproc.ps1,01_raw/S1/*.zip,02_preproc/S1,ready,waits for downloads
+P5-03,2026-10-23,5,SNAP gpt,Test run T1 2025-02-16,S1_preproc_nofilter.xml,S1A 20250216 GRDH,02_preproc/S1,ok,2.2 min; precise orbit + EGM96 downloaded; grid offset 2.6/7.3 m found
+P5-04,2026-10-23,5,SNAP graph,Enable alignToStandardGrid (origin 0 then 5),Terrain-Correction,,S1_preproc_nofilter.xml,fixed,SNAP aligns pixel centres -> origin 5,5 puts edges on 10 m grid
+P5-05,2026-10-23,5,SNAP gpt + finalize_s1.py,Batch all 5 scenes + crop to AOI grid,origin 5,5; crop 582400 2807200 596600 2821000; NaN nodata; DEFLATE,01_raw/S1 (5 zips),02_preproc/S1 (10 tifs),ok,1420x1380 px each; first crop run failed on missing DLL PATH -> runner now loads sareo_env.ps1
+P5-06,2026-10-23,5,Python,Output checks,10_scripts/check_s1_outputs.py,02_preproc/S1/*_dB.tif,09_docs/s1_output_check.csv,ok,all on grid; bridge-water VV +13.2..13.5 dB peaks at 0 shift
+P5-07,2026-10-23,5,Python,SAR characteristics panel,10_scripts/s1_characteristics.py,T0/T1/T2 dB,09_docs/s1_characteristics.png,ok,pontoon bridges visible only at T1
+P5-08,2026-10-23,5,PyQGIS,Layer definition for SAR rasters,10_scripts/make_s1_qlr.py; VV -25..0 dB grey; relative paths,02_preproc/S1,08_layouts/S1_sigma0_nofilter.qlr,ok,project not edited (open in QGIS)
+P6-01,2026-10-23,6,SNAP gpt,Radar-geometry calibrated T1 subset,S1_cal_subset.xml (orbit; noise; sigma0 linear; AOI subset),S1A 20250216 GRDH,03_enhanced/S1_filters/work/T1_cal_subset.dim,ok,1642x1585 px
+P6-02,2026-10-23,6,SNAP gpt + finalize_s1.py,21 SNAP filter configs + TC,S1_filter_tc.xml; run_filters.ps1,T1_cal_subset.dim,03_enhanced/S1_filters/T1_<tag>_lin.tif,ok,first pass interrupted after boxcar7 and resumed
+P6-03,2026-10-23,6,OTB 9.1.1 + SNAP,Kuan 3/5/7 (4 looks) in radar geometry + same TC,run_filters_extra.py kuan,T1_cal_subset.dim,T1_kuan3/5/7_lin.tif,ok,
+P6-04,2026-10-23,6,Python,Multi-temporal Quegan filter (3 T1 dates; 5x5),run_filters_extra.py mt,02_preproc/S1 nofilter lin (0123/0204/0216),T1_mtquegan_lin.tif,ok,
+P6-05,2026-10-23,6,deepdespeckling SAR2SAR + SNAP,AI despeckling (amp=500*sqrt(sigma0)) + same TC,run_filters_extra.py sar2sar; torch safe_globals for numpy scalar,T1_cal_subset.dim,T1_sar2sar_lin.tif,ok,371 s CPU
+P6-06,2026-10-23,6,Python,Detect ENL bug,pixel compare lee5/gammamap5 vs boxcar5,filter outputs,console,issue,ENL=1 default made Lee and Gamma-MAP equal to boxcar
+P6-07,2026-10-23,6,SNAP gpt,Re-run ENL-dependent filters with ENL 4.4 / 4 looks,lee; gammamap; leesigma; idan; mulog; refinedlee,T1_cal_subset.dim,T1_<tag>_lin.tif,ok,lee5 now differs from boxcar at 79% of px
+P6-08,2026-10-23,6,Python,Metrics + comparison table,filter_metrics.py; 25 land + 10 water blocks; 97619 edge px; 6231 point targets,26 filter outputs,09_docs/filter_metrics.csv + filter_comparison.md + 06_vectors/filter_samples.gpkg,ok,
+P6-09,2026-10-23,6,Python,Filter panel + finalists ratio check,filter_panel.py; filter_finalists.py,filter outputs,09_docs/filter_panel.png + filter_finalists.png,ok,Gamma-MAP leaves tent city unfiltered -> rejected
+P6-10,2026-10-23,6,Decision,Choose Lee 7x7 (ENL 4.4),best score; MR 0.998; VV ENL 22.3; VH ENL 13.0,filter_comparison.md,09_docs/06_Speckle_Filter_Evaluation.md + snap_graphs/S1_preproc.xml,ok,
+P5-auto,2026-10-23,5,SNAP gpt + finalize_s1.py,S1 preprocessing (lee7),S1_preproc.xml; crop to AOI grid,S1A_IW_GRDH_1SDV_20241112T002838_20241112T002903_056514_06EDA5_F28B.zip,02_preproc/S1/S1A_20241112_Sig0_lee7_lin.tif + _dB.tif,ok,3.9 min
+P5-auto,2026-10-23,5,SNAP gpt + finalize_s1.py,S1 preprocessing (lee7),S1_preproc.xml; crop to AOI grid,S1A_IW_GRDH_1SDV_20250123T002832_20250123T002857_057564_071748_F951.zip,02_preproc/S1/S1A_20250123_Sig0_lee7_lin.tif + _dB.tif,ok,3.7 min
+P5-auto,2026-10-23,5,SNAP gpt + finalize_s1.py,S1 preprocessing (lee7),S1_preproc.xml; crop to AOI grid,S1A_IW_GRDH_1SDV_20250204T002832_20250204T002857_057739_071E36_6075.zip,02_preproc/S1/S1A_20250204_Sig0_lee7_lin.tif + _dB.tif,ok,3.4 min
+P5-auto,2026-10-23,5,SNAP gpt + finalize_s1.py,S1 preprocessing (lee7),S1_preproc.xml; crop to AOI grid,S1A_IW_GRDH_1SDV_20250216T002831_20250216T002856_057914_07253C_DEC9.zip,02_preproc/S1/S1A_20250216_Sig0_lee7_lin.tif + _dB.tif,ok,4.1 min
+P5-auto,2026-10-23,5,SNAP gpt + finalize_s1.py,S1 preprocessing (lee7),S1_preproc.xml; crop to AOI grid,S1A_IW_GRDH_1SDV_20250417T002831_20250417T002856_058789_07489D_37A9.zip,02_preproc/S1/S1A_20250417_Sig0_lee7_lin.tif + _dB.tif,ok,4.4 min
+P7-01,2026-10-23,7,conda,Install GDAL JPEG2000 plugin,libgdal-jp2openjpeg (conda-forge); GDAL_DRIVER_PATH in sareo_env.ps1,,D:\conda_envs\sareo,ok,needed to read S2 .jp2
+P7-02,2026-10-23,7,Python,Inspect S2 metadata,10_scripts/inspect_s2.py,01_raw/S2 (3 zips),console,ok,baseline 05.11; BOA_ADD_OFFSET -1000; quantification 10000
+P7-03,2026-10-23,7,Python (rasterio /vsizip/),Reflectance + SCL mask + clip + stack,10_scripts/s2_preprocess.py; (DN-1000)/10000; 20 m bilinear; SCL nearest; mask SCL 0 1 3 8 9 10,01_raw/S2,02_preproc/S2/S2_<date>_L2A_refl10m.tif + _SCL10m + _mask10m,ok,masked 0.040/0.009/0.022 %; same grid as S1
+P7-04,2026-10-23,7,Python,Composites + indices + enhancement panel,10_scripts/s2_enhance.py; natural fcc swir; 2-98 % 8-bit copies; NDVI MNDWI NDBI,02_preproc/S2,03_enhanced/S2 + 09_docs/s2_composites/indices/enhancement_panel.png,ok,NDBI also high on sand and turbid water
+P7-05,2026-10-23,7,OmniCloudMask (worker process),AI cloud mask vs SCL,10_scripts/s2_cloudmask_ai.py + ocm_worker.py; CPU,02_preproc/S2,02_preproc/S2/S2_<date>_omnicloud10m.tif + 09_docs/cloudmask_comparison.csv,ok,OCM 0 % cloud; SCL flags bright tent roofs; agreement >= 99.97 %
+P7-06,2026-10-23,7,PyQGIS,Layer definition for S2 products,10_scripts/make_s2_qlr.py,03_enhanced/S2,08_layouts/S2_composites_indices.qlr,ok,
+P8-01,2026-10-23,8,Python,Absolute check vs OSM bridges + S1 date-to-date + S1-S2 water masks,10_scripts/coreg_checks.py; 262 bridge-over-water px; phase correlation x20,02_preproc S1 lee7 + S2,09_docs/coreg_checks.csv,ok,S1 +10 E (layover) S2 -20 N (shadow); S1 dates <1 m; S1-S2 T1 0.22 px
+P8-02,2026-10-23,8,AROSICS 1.13.2,S2 T0/T2 -> T1 global + local; S1 -> S2 local,10_scripts/coreg_arosics.py; ws 512; grid 50 px; filter level 3,S2 B08 + S1 VV,09_docs/coreg_arosics.csv + 06_vectors/coreg_tiepoints.gpkg,ok,S2 RMSE 3.3/2.6 m; S1->S2 0 valid tie points
+P8-03,2026-10-23,8,Python (SIFT + GDAL),Georeferencing demo: 15 GCPs + 10 check points; poly1 poly2 TPS,10_scripts/georef_demo.py,synthetic unreferenced sector map,04_coreg/georef_demo + 09_docs/georef_rmse.csv,ok,poly2 check RMSE 5.09 m (0.51 px)
+P8-04,2026-10-23,8,Decision,No co-registration correction needed,all pairs < 0.5 px,,09_docs/08_Georeferencing_Coregistration.md,ok,
+P8-05,2026-10-23,8,Text editor,Fix S1 look direction in Phase 5 notes,descending right-looking = looks west; layover east,,09_docs/05_SAR_Preprocessing.md,fixed,
+P9-01,2026-10-23,9,Python,Lossless SAR+EO stacks T0 T1 T2,10_scripts/fusion.py; 11 bands Float32 DEFLATE; no resampling,02_preproc S1 lee7 + S2 refl + 03_enhanced indices,05_fused/fused_stack_<epoch>_<date>.tif,ok,round-trip bit-identical
+P9-02,2026-10-23,9,Python,PCA / IHS / Brovey / HPF fusion on T1,fusion.py; PC1 79.1 %; HPF weight 0.5 5x5,fused_stack_T1,05_fused/fusion_*_T1_20250216.tif,ok,HPF CC 0.895 ERGAS 24.6; PCA/IHS/Brovey CC 0.07-0.29
+P9-03,2026-10-23,9,GDAL + Python,Multi-temporal SAR RGB,R=VV T1 G=VV T0 B=VV T2; VRT + 8-bit -25..0 dB,02_preproc S1 lee7,05_fused/mtRGB_VV_R-T1_G-T0_B-T2.vrt + _display.tif,ok,
+P9-04,2026-10-23,9,Python,Fusion quality + panel,CC ERGAS SAM sCC; fusion_panel.py,05_fused,09_docs/fusion_quality.csv + fusion_panel.png,ok,
+P9-05,2026-10-23,9,PyQGIS,Layer definition for fusion products,make_fusion_qlr.py,05_fused,08_layouts/Fusion_products.qlr,ok,
+P10-01,2026-10-23,10,Python,Rule-based feature extraction,10_scripts/extract_features.py; water/tents/bridges/sand/vegetation rules,05_fused stacks + S1 lee7,06_vectors/extracted_raw.gpkg,ok,3 rule fixes (water OR rule; bridge presence as attribute; bridge must cross T1 water)
+P10-02,2026-10-23,10,Python,Build feature database with common schema,10_scripts/build_feature_db.py; 12 fields,extracted_raw.gpkg + osm.gpkg,06_vectors/kumbh_features.gpkg (9 layers),ok,tents 51 = 12.27 km2; bridges 5; buildings 65503
+P10-03,2026-10-23,10,PyQGIS,Default styles + Value Map + aliases in GPKG,10_scripts/style_feature_db.py,kumbh_features.gpkg,layer_styles table (9 styles),ok,
+P10-04,2026-10-23,10,qgis_process + ogr2ogr,Shapefile merge demo,refactorfields -> mergevectorlayers -> dissolve; ogr2ogr -append SQL; package,4 sector SHPs (3 schemas),06_vectors/merge_demo/*.gpkg,ok,area 12.275 km2 preserved; 51 features
+P10-05,2026-10-23,10,qgis_process + geopandas,Validation,checkvalidity; deleteduplicategeometries; NULLs; overlaps; topology,kumbh_features.gpkg,09_docs/validation_report.csv,ok,0 invalid; 4 OSM duplicate buildings
+P10-06,2026-10-23,10,qgis_process + geopandas,Remove duplicates + export SHP GeoJSON CSV-WKT,10_scripts/export_features.py,kumbh_features.gpkg,07_analysis/exports/vectors + 09_docs/export_manifest.csv,ok,buildings 65499 after dedup
+P10-07,2026-10-23,10,PyQGIS,Layer definition for feature database,10_scripts/make_vector_qlr.py,kumbh_features.gpkg,08_layouts/Kumbh_features.qlr,ok,
+P11-01,2026-10-23,11,QGIS QSettings + pip,Enable installed plugins; scikit-learn for QGIS Python,PythonPlugins flags; pip install --user scikit-learn 1.9.1,,QGIS profile,ok,SCP cannot run headless; dzetsaka/MMQGIS no Processing provider
+P11-02,2026-10-23,11,Python,Training / validation samples,10_scripts/make_training_samples.py; 5 classes x 40 polygons; 70/30 split,kumbh_features.gpkg,06_vectors/training_samples.gpkg,ok,144 training 56 validation
+P11-03,2026-10-23,11,QgsRasterCalculator,Raster Calculator demo dVV T1-T0,"""T1@2"" - ""T0@2""",S1 lee7 dB T0 T1,07_analysis/plugin_demos/rastercalc_dVV_T1-T0.tif,ok,identical to numpy; 11.1 % >= +3 dB
+P11-04,2026-10-23,11,Graphical Modeler,Tent change mask model + run,calc >= 3 dB -> sieve 50 px -> polygonize -> DN=1,S1 lee7 dB T0 T1,09_docs/models/tent_change_mask.model3 + plugin_demos/model_change_polygons_T1-T0.gpkg,ok,256 polygons 17.2 km2; 85 % of tent blocks
+P11-05,2026-10-23,11,QuickOSM (Processing),bridge=yes in AOI,overpass-api.de + overpass.kumi.systems,,,failed,both servers 502 Bad Gateway; retry in GUI
+P11-06,2026-10-23,11,PyQGIS,Demo project for GUI plugins,plugin_demos_qgis.py part D,all layers,SAREO_plugin_demo.qgz,ok,
+P11-07,2026-10-23,11,Text editor,Plugin demo booklet,15 plugins,,09_docs/11_Plugin_Demos.md,ok,GUI screenshots pending (user)
+P12-01,2026-10-23,12,Python,Class signatures per epoch + JM separability + figures,10_scripts/signatures.py; 200 sample polygons + 5 bridges; VV VH VV-VH NDVI MNDWI NDBI + 6 S2 bands,05_fused stacks T0 T1 T2,09_docs/signatures_stats.csv + signatures_separability.csv + 3 figures,ok,tent vs sand optically identical; SAR separates; multi-temporal SAR JM tent vs built-up 0.36 -> 1.75
+P12-02,2026-10-23,12,Text editor,Signature reference sheet,classes + change + separability + backscatter rules + methods + dugout (literature),signatures_*.csv,09_docs/12_Signature_Reference_Sheet.md,ok,
+P13-01,2026-10-23,13,Python,Log-ratio change detection + Otsu + change classes,10_scripts/change_detection.py; LR VV dB; floodplain 1.5 km,S1 lee7 dB 5 dates,07_analysis/change/*.tif + 09_docs/change_*.csv/png,ok,Otsu +1.97/-3.53 dB; temporary 12.22 km2
+P13-02,2026-10-23,13,Python,Tent-city area time series,VV_d - VV_T0 >= 3 dB (and Otsu); NDVI_T0 < 0.3; not water,S1 lee7 dB 5 dates,09_docs/change_area_timeseries.csv,ok,0 / 10.95 / 10.25 / 8.71 / 0.26 km2
+P13-03,2026-10-23,13,scikit-learn RF,Classification 5 input sets (first run),300 trees; 3000 px/class; polygon split,fused stacks + training_samples.gpkg,07_analysis/classification,issue,sand PA 0.28: sand samples from T2 layer contained T1 tents
+P13-04,2026-10-23,13,Python,Fix sand samples (exclude 30 m around tent blocks); bare-field class tried and dropped,make_training_samples.py,kumbh_features.gpkg,06_vectors/training_samples.gpkg,fixed,only 2 bare-field candidates
+P13-05,2026-10-23,13,scikit-learn RF,Classification rerun + change-rule product,tent needs dVV >= +1 dB,fused stacks + fixed samples,07_analysis/classification + 09_docs/classification_*.csv/png,ok,fused+temporal OA 0.867 kappa 0.824; rule: tent area 18.7 km2
+P13-06,2026-10-23,13,Python,Recompute Phase 12 signatures with clean samples,signatures.py,fixed samples,09_docs/signatures_* + 12_Signature_Reference_Sheet.md,ok,tent vs sand fused JM 1.36 -> 1.70
+P14-01,2026-10-23,14,Text editor,Assemble despeckling AI comparison,SAR2SAR vs Lee 7x7 (Phase 6 metrics),09_docs/filter_metrics.csv,09_docs/14_AI_Comparison.md,ok,
+P14-02,2026-10-23,14,Python (Earth Search COG),Find cloudy monsoon S2 scenes,10_scripts/find_cloudy_s2.py; AOI SCL cloud %,AWS sentinel-2-l2a,console,ok,chose 2025-08-15 (43 %) and 2025-09-24 (22 %)
+P14-03,2026-10-23,14,OmniCloudMask 1.8.0 (worker),Cloud mask vs SCL on cloudy scenes,10_scripts/cloudmask_test_monsoon.py,AWS COG AOI windows,02_preproc/S2/S2_*_monsoon_* + 09_docs/cloudmask_monsoon_comparison.csv/png,ok,SCL false clouds on flooded floodplain; OCM finds thin haze
+P14-04,2026-10-23,14,pip + curl,Install segment-anything 1.0 + SAM ViT-B weights,dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth (MD5 01ec64...),,D:\conda_envs\sareo\sam_models,ok,Apache-2.0
+P14-05,2026-10-23,14,SAM ViT-B (worker),Point-prompted tent digitising,10_scripts/sam_tents.py + sam_worker.py; 5 tiles 2 km; 5+5 clicks,S2 T1 natural colour,07_analysis/ai/sam_tents_T1.tif/.gpkg + 09_docs/sam_tents_scores.csv/png,ok,mean IoU 0.63 vs rule; 7.2 s per 4 km2
+P15-01,2026-10-24,15,PyQGIS,Rebuild .qlr layer definitions,make_s2_qlr.py / make_fusion_qlr.py / make_vector_qlr.py; project owns layers,02_preproc + 05_fused + 06_vectors,08_layouts/*.qlr,ok,S1 5 / S2 18 / Fusion 5 / Features 10 layers
+P15-02,2026-10-24,15,PyQGIS,Final project + 7 print layouts,10_scripts/build_final_project.py; A4 landscape; relative paths,all .qlr + 07_analysis,SAREO_Kumbh.qgz + 08_layouts/01..07 .pdf/.png,ok,47 layers; backup SAREO_Kumbh_before_phase15.qgz
+P15-03,2026-10-24,15,Claude Docs,Final report,12 figures + 7 layouts; sections Abstract..References,09_docs + 08_layouts,SAREO-Kumbh Final Report (claude.ai doc),ok,exportable to PDF/Word
+P15-04,2026-10-24,15,robocopy + tar,Package submission,excludes 01_raw zips / S1 filter work / backups,D:\SAREO-Kumbh,D:\SAREO-Kumbh_submission\SAREO-Kumbh_submission.zip,ok,1235 MB; 393 files
+P15-05,2026-10-24,15,PyQGIS,Reopen test from another folder,10_scripts/reopen_test.py,D:\SAREO_reopen_test\SAREO-Kumbh,09_docs/reopen_test_report.txt,ok,main 47/47 valid + 7 layouts; plugin demo 14/14; 0 paths outside package
+P16-01,2026-10-24,16,Claude Docs,Interview preparation sheet,pitch + 5-min script + why answers + SAR basics + mock Q&A + limitations + future work; numbers from 09_docs CSVs,09_docs result CSVs,09_docs/15_Interview_Prep.md + SAREO-Kumbh Interview Prep (claude.ai doc),ok,rehearsal by user

@@ -1,0 +1,4 @@
+epoch,date,runtime_s,scl_masked_pct,ocm_thick_pct,ocm_thin_pct,ocm_shadow_pct,ocm_masked_pct,agreement_pct,kappa
+T0,20241113,26,0.031,0.0,0.0,0.0,0.0,99.969,0.0
+T1,20250216,24,0.009,0.0,0.0,0.0,0.0,99.991,0.0
+T2,20250417,24,0.001,0.0,0.0,0.0,0.0,99.999,0.0

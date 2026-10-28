@@ -1,0 +1,31 @@
+input_set,true_class,pred_water,pred_tent_block,pred_sand,pred_vegetation,pred_built_up
+SAR-only,water,3755,184,1167,63,3
+SAR-only,tent_block,92,1983,801,398,2226
+SAR-only,sand,641,88,1175,309,30
+SAR-only,vegetation,1,429,204,2953,338
+SAR-only,built_up,0,118,0,51,602
+EO-only,water,4625,9,534,0,4
+EO-only,tent_block,34,3995,1320,29,122
+EO-only,sand,850,450,670,267,6
+EO-only,vegetation,0,0,2,3837,86
+EO-only,built_up,1,72,6,10,682
+Fused,water,4681,0,491,0,0
+Fused,tent_block,0,4402,953,16,129
+Fused,sand,702,136,1132,273,0
+Fused,vegetation,0,0,2,3842,81
+Fused,built_up,0,73,0,5,693
+SAR multi-temporal,water,4216,211,739,3,3
+SAR multi-temporal,tent_block,127,4500,548,138,187
+SAR multi-temporal,sand,549,81,1284,329,0
+SAR multi-temporal,vegetation,0,442,95,3215,173
+SAR multi-temporal,built_up,0,2,0,43,726
+Fused + temporal,water,4692,0,480,0,0
+Fused + temporal,tent_block,11,4791,591,16,91
+Fused + temporal,sand,651,80,1242,270,0
+Fused + temporal,vegetation,0,0,0,3848,77
+Fused + temporal,built_up,0,65,0,4,702
+Fused + temporal + change rule,water,4692,0,480,0,0
+Fused + temporal + change rule,tent_block,11,4641,741,16,91
+Fused + temporal + change rule,sand,651,69,1253,270,0
+Fused + temporal + change rule,vegetation,0,0,0,3848,77
+Fused + temporal + change rule,built_up,0,11,54,4,702

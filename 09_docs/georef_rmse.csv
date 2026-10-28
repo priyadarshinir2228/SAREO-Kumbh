@@ -1,0 +1,4 @@
+transform,n_gcp,rmse_gcp_m,rmse_gcp_px,n_check,rmse_check_m,rmse_check_px,rmse_true_grid_m,max_true_err_m
+Polynomial 1 (affine),15,7.93,0.79,10,10.57,1.06,7.9,21.75
+Polynomial 2,15,4.11,0.41,10,5.09,0.51,2.14,6.16
+Thin plate spline,15,0.0,0.0,10,7.09,0.71,4.67,12.12

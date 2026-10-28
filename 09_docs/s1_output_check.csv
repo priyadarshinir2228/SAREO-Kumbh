@@ -1,0 +1,6 @@
+file,crs,pixel_m,size_px,origin_mod10,covers_aoi,bands,VH_nodata_pct,VH_p2_median_p98_dB,VH_bridge_minus_water_dB,VH_contrast_shift1_3px,VV_nodata_pct,VV_p2_median_p98_dB,VV_bridge_minus_water_dB,VV_contrast_shift1_3px
+S1A_20241112_Sig0_nofilter_dB.tif,EPSG:32644,10.00 x 10.00,1420 x 1380,"0.00, 0.00",True,Sigma0_VH|Sigma0_VV,0.01,-36.9 / -17.6 / -10.3,13.0,13.0/13.1/13.1,0.01,-23.3 / -10.0 / -0.1,13.4,13.1/12.9/12.7
+S1A_20250123_Sig0_nofilter_dB.tif,EPSG:32644,10.00 x 10.00,1420 x 1380,"0.00, 0.00",True,Sigma0_VH|Sigma0_VV,0.01,-34.5 / -17.1 / -10.1,12.3,12.3/12.2/12.2,0.01,-22.7 / -9.8 / 0.8,13.5,13.2/12.9/12.6
+S1A_20250204_Sig0_nofilter_dB.tif,EPSG:32644,10.00 x 10.00,1420 x 1380,"0.00, 0.00",True,Sigma0_VH|Sigma0_VV,0.01,-34.2 / -17.1 / -10.1,12.3,12.1/12.1/12.1,0.01,-22.8 / -10.0 / 0.7,13.3,13.0/12.7/12.6
+S1A_20250216_Sig0_nofilter_dB.tif,EPSG:32644,10.00 x 10.00,1420 x 1380,"0.00, 0.00",True,Sigma0_VH|Sigma0_VV,0.01,-34.4 / -17.2 / -9.9,12.6,12.4/12.3/12.4,0.01,-22.6 / -10.3 / 0.5,13.2,12.8/12.4/12.3
+S1A_20250417_Sig0_nofilter_dB.tif,EPSG:32644,10.00 x 10.00,1420 x 1380,"0.00, 0.00",True,Sigma0_VH|Sigma0_VV,0.01,-38.7 / -18.8 / -10.0,12.6,12.6/12.6/12.6,0.01,-23.5 / -11.3 / -0.2,13.2,12.9/12.5/12.2

@@ -1,0 +1,4 @@
+pair,global_shift_E_m,global_shift_N_m,global_reliability_pct,global_ssim_improved,tiepoints_total,tiepoints_valid,median_shift_E_m,median_shift_N_m,rmse_m,p90_abs_shift_m
+S2 B08 T0 20241113 -> S2 B08 T1,-2.17,-2.18,95.2,True,812,359,-1.87,-2.36,3.3,4.16
+S2 B08 T2 20250417 -> S2 B08 T1,1.45,2.3,95.1,True,812,407,0.61,2.16,2.63,3.43
+S1 VV T1 20250216 -> S2 B08 T1,,,,,811,0,,,,

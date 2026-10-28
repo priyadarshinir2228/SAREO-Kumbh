@@ -1,0 +1,9 @@
+Reopen test of D:\SAREO_reopen_test\SAREO-Kumbh
+
+SAREO_Kumbh.qgz: read True; 47 layers; invalid 0 []
+  file layers outside the package folder: 0 []
+  CRS EPSG:32644; layouts 7: ['01 AOI and location', '02 Sentinel-1 epochs', '03 Sentinel-2 composites T1', '04 Fusion', '05 Change map', '06 Classification', '07 Feature database']
+
+SAREO_plugin_demo.qgz: read True; 14 layers; invalid 0 []
+  file layers outside the package folder: 0 []
+  CRS EPSG:32644; layouts 0: []

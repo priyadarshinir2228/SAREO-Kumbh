@@ -1,0 +1,106 @@
+<graph id="S1_preproc">
+  <!-- SAREO-Kumbh Phase 5: Sentinel-1 GRD -> calibrated, terrain-corrected sigma0 with Lee 7x7 speckle filter (Phase 6 choice).
+       Variables passed by gpt -P: ${input} (GRD .zip), ${aoi} (WKT, WGS 84), ${outLinear}, ${outDb} (paths without extension). -->
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters>
+      <file>${input}</file>
+    </parameters>
+  </node>
+  <node id="Apply-Orbit-File">
+    <operator>Apply-Orbit-File</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters>
+      <orbitType>Sentinel Precise (Auto Download)</orbitType>
+      <polyDegree>3</polyDegree>
+      <continueOnFail>true</continueOnFail>
+    </parameters>
+  </node>
+  <node id="ThermalNoiseRemoval">
+    <operator>ThermalNoiseRemoval</operator>
+    <sources><sourceProduct refid="Apply-Orbit-File"/></sources>
+    <parameters>
+      <selectedPolarisations>VH,VV</selectedPolarisations>
+      <removeThermalNoise>true</removeThermalNoise>
+    </parameters>
+  </node>
+  <node id="Remove-GRD-Border-Noise">
+    <operator>Remove-GRD-Border-Noise</operator>
+    <sources><sourceProduct refid="ThermalNoiseRemoval"/></sources>
+    <parameters>
+      <selectedPolarisations>VH,VV</selectedPolarisations>
+      <borderLimit>500</borderLimit>
+      <trimThreshold>0.5</trimThreshold>
+    </parameters>
+  </node>
+  <node id="Calibration">
+    <operator>Calibration</operator>
+    <sources><sourceProduct refid="Remove-GRD-Border-Noise"/></sources>
+    <parameters>
+      <selectedPolarisations>VH,VV</selectedPolarisations>
+      <outputSigmaBand>true</outputSigmaBand>
+      <outputGammaBand>false</outputGammaBand>
+      <outputBetaBand>false</outputBetaBand>
+      <outputImageScaleInDb>false</outputImageScaleInDb>
+    </parameters>
+  </node>
+  <node id="Subset">
+    <operator>Subset</operator>
+    <sources><sourceProduct refid="Calibration"/></sources>
+    <parameters>
+      <geoRegion>${aoi}</geoRegion>
+      <copyMetadata>true</copyMetadata>
+    </parameters>
+  </node>
+  <node id="Speckle-Filter">
+    <operator>Speckle-Filter</operator>
+    <sources><sourceProduct refid="Subset"/></sources>
+    <parameters>
+      <!-- chosen in Phase 6 (09_docs/06_Speckle_Filter_Evaluation.md): Lee 7x7, ENL 4.4 -->
+      <filter>Lee</filter>
+      <filterSizeX>7</filterSizeX>
+      <filterSizeY>7</filterSizeY>
+      <estimateENL>false</estimateENL>
+      <enl>4.4</enl>
+    </parameters>
+  </node>
+  <node id="Terrain-Correction">
+    <operator>Terrain-Correction</operator>
+    <sources><sourceProduct refid="Speckle-Filter"/></sources>
+    <parameters>
+      <demName>Copernicus 30m Global DEM</demName>
+      <demResamplingMethod>BILINEAR_INTERPOLATION</demResamplingMethod>
+      <imgResamplingMethod>BILINEAR_INTERPOLATION</imgResamplingMethod>
+      <pixelSpacingInMeter>10.0</pixelSpacingInMeter>
+      <mapProjection>EPSG:32644</mapProjection>
+      <nodataValueAtSea>false</nodataValueAtSea>
+      <saveSelectedSourceBand>true</saveSelectedSourceBand>
+      <alignToStandardGrid>true</alignToStandardGrid>
+      <!-- SNAP aligns pixel CENTRES to this origin; 5 m puts pixel EDGES on the 10 m grid used by Sentinel-2 -->
+      <standardGridOriginX>5.0</standardGridOriginX>
+      <standardGridOriginY>5.0</standardGridOriginY>
+    </parameters>
+  </node>
+  <node id="WriteLinear">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="Terrain-Correction"/></sources>
+    <parameters>
+      <file>${outLinear}</file>
+      <formatName>GeoTIFF-BigTIFF</formatName>
+    </parameters>
+  </node>
+  <node id="LinearToFromdB">
+    <operator>LinearToFromdB</operator>
+    <sources><sourceProduct refid="Terrain-Correction"/></sources>
+  </node>
+  <node id="WriteDb">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="LinearToFromdB"/></sources>
+    <parameters>
+      <file>${outDb}</file>
+      <formatName>GeoTIFF-BigTIFF</formatName>
+    </parameters>
+  </node>
+</graph>
+

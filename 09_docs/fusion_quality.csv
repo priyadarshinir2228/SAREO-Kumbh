@@ -1,0 +1,9 @@
+product,check,result,mean_CC,ERGAS,SAM_deg,sCC_SAR,sCC_SAR_original
+fused_stack_T0_20241113.tif,lossless round-trip,all 11 bands bit-identical: True; same grid: True; dtype float32; DEFLATE,,,,,
+fused_stack_T1_20250216.tif,lossless round-trip,all 11 bands bit-identical: True; same grid: True; dtype float32; DEFLATE,,,,,
+fused_stack_T2_20250417.tif,lossless round-trip,all 11 bands bit-identical: True; same grid: True; dtype float32; DEFLATE,,,,,
+fusion_PCA_T1_20250216.tif,spectral + spatial quality vs original S2,"CC per band B02 0.213, B03 0.124, B04 0.149, B08 0.892, B11 0.198, B12 0.147; mean CC 0.287; ERGAS 60.91; SAM 13.18 deg; sCC with SAR 0.633 (original S2 0.005)",0.287,60.91,13.18,0.633,0.005
+fusion_IHS_T1_20250216.tif,spectral + spatial quality vs original S2,"CC per band B04 0.336, B03 0.034, B02 -0.028; mean CC 0.114; ERGAS 76.50; SAM 13.65 deg; sCC with SAR 0.847 (original S2 0.016)",0.114,76.5,13.65,0.847,0.016
+fusion_Brovey_T1_20250216.tif,spectral + spatial quality vs original S2,"CC per band B04 0.170, B03 -0.082, B02 0.130; mean CC 0.073; ERGAS 75.44; SAM 0.00 deg; sCC with SAR 0.226 (original S2 0.016)",0.073,75.44,0.0,0.226,0.016
+fusion_HPF_T1_20250216.tif,spectral + spatial quality vs original S2,"CC per band B02 0.896, B03 0.895, B04 0.895, B08 0.893, B11 0.894, B12 0.894; mean CC 0.895; ERGAS 24.55; SAM 3.81 deg; sCC with SAR 0.831 (original S2 0.005)",0.895,24.55,3.81,0.831,0.005
+PCA eigen-analysis,variance explained by PC1..PC6 (%),"79.1, 15.9, 4.2, 0.4, 0.2, 0.1",,,,,
